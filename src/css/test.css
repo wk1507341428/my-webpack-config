@@ -1,0 +1,7 @@
+#app{
+    background: #1488cc; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #1488cc, #2b32b2); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #1488cc, #2b32b2);
+    width: 100vw;
+    height: 100vh;
+}
