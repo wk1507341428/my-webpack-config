@@ -13,15 +13,15 @@ const webpackBaseConfig = {
     module:{
         rules:[
             // 看也看得出来这是配置css的loader
-            { test: /\.css/, use: [MiniCssExtractPlugin.loader, 'css-loader'] },
+            { test: /\.css/, use: [MiniCssExtractPlugin.loader, 'css-loader','postcss-loader'] },
         ]
     },
     plugins: [
+        // 拆分css
         new MiniCssExtractPlugin({
             filename: '[name].[hash].css',
             chunkFilename: '[id].[hash].css',
-        }),
-        // new BundleAnalyzerPlugin()
+        })
     ],
     optimization:{
         // CommonsChunkPlugin在webpack4中已经被移除了，现在是使用optimization.splitChunks代替。
