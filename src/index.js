@@ -9,7 +9,8 @@ const env = process.env.NODE_ENV
 
 function component() {
     const element = document.createElement('div')
-    element.innerHTML = _.join(['我的环境变量', env], ' ')
+    // element.innerHTML = _.join(['我的环境变量', env], ' ')
+    element.innerHTML = ['我的环境变量', env].join(" ")
     element.classList.add('hello')
     return element
 }

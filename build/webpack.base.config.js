@@ -14,6 +14,13 @@ const webpackBaseConfig = {
         rules:[
             // 看也看得出来这是配置css的loader
             { test: /\.css/, use: [MiniCssExtractPlugin.loader, 'css-loader','postcss-loader'] },
+            // babel配置
+            {
+                test: /\.js$/,
+                exclude: /node_modules/, //不需要对第三方模块进行转换，耗费性能
+                loader: "babel-loader" ,
+                include: [path.join(__dirname, '../src')]
+            }
         ]
     },
     plugins: [
