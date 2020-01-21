@@ -4,6 +4,12 @@
     left: 50%;
     transform: translateX(-50%);
 }
+.bg{
+    background: url('../imgs/WechatIMG76.jpeg') no-repeat;
+    width: 60%;
+    height: 60%;
+    background-size: 100%;
+}
 
 *{
     margin: 0;

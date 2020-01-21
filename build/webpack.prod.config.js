@@ -15,7 +15,7 @@ rimraf.sync("dist")
 
 const env = process.env.NODE_ENV === 'testing' ? require('../config/test.env') : require('../config/prod.env')
 const mode = process.env.NODE_ENV === 'production' ? 'production' : 'development'
-console.log(env,"env")
+console.log(env,"env",mode)
 
 let webpackProdConfig = webpackMerge(baseWebpackConfig,{
     mode,
@@ -24,6 +24,7 @@ let webpackProdConfig = webpackMerge(baseWebpackConfig,{
         new HtmlWebpackPlugin({
             template:path.resolve(__dirname,'../public/index.html')
         }),
+        // 设置前端环境变量
         new webpack.DefinePlugin({
             'process.env': env
         }),
@@ -31,18 +32,17 @@ let webpackProdConfig = webpackMerge(baseWebpackConfig,{
     optimization:{
         // 这里需要注意的是本来mode=production 的时候，是会自己压缩js的，但是启用了这个配置，将不会自己压缩js了
         minimizer: [
-            new OptimizeCSSAssetsPlugin({
-                cssProcessorOptions: { 
-                    discardComments: { removeAll: true } // 移除注释
-                } 
-            }),
-            // // 压缩js
-            // new UglifyJsPlugin({
-            //     test: /\.js(\?.*)?$/i,
-            //     cache: true,
-            //     parallel: true,  //使用多进程并行运行来提高构建速度
-            //     sourceMap: true,
-            // })
+            // new OptimizeCSSAssetsPlugin({
+            //     cssProcessorOptions: { 
+            //         discardComments: { removeAll: true } // 移除注释
+            //     } 
+            // }),
+            // 压缩js
+            new UglifyJsPlugin({
+                test: /\.js(\?.*)?$/i,
+                cache: true,
+                parallel: true,  //使用多进程并行运行来提高构建速度
+            })
         ]
     }
 })

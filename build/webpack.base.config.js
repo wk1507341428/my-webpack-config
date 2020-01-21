@@ -1,3 +1,4 @@
+const utils = require("./utils")
 const path = require('path')
 // 拆分CSS 和 压缩css
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
@@ -7,7 +8,8 @@ let BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlug
 const webpackBaseConfig = {
     entry: path.resolve(__dirname,'../src/index.js'),    // 入口文件
     output: {
-        filename: '[name].[hash:8].js',
+        filename: utils.assetsPath("js/[name].[hash:8].js"),
+        publicPath: "/", // 打包后的资源的访问路径前缀
         path: path.resolve(__dirname, '../dist')
     },
     module:{
@@ -20,13 +22,22 @@ const webpackBaseConfig = {
                 exclude: /node_modules/, //不需要对第三方模块进行转换，耗费性能
                 loader: "babel-loader" ,
                 include: [path.join(__dirname, '../src')]
-            }
+            },
+            // 图片配置
+            {
+                test: /\.(png|jpe?g|gif)$/i,
+                loader: 'file-loader',
+                options: {
+                    name: utils.assetsPath("imgs/[name].[hash:8].[ext]"),
+                    publicPath: '/',
+                }
+            },
         ]
     },
     plugins: [
         // 拆分css
         new MiniCssExtractPlugin({
-            filename: '[name].[hash].css',
+            filename: utils.assetsPath("css/[name].[hash8].css"),
             chunkFilename: '[id].[hash].css',
         })
     ],

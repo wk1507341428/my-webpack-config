@@ -10,6 +10,7 @@ module.exports = webpackMerge(baseWebpackConfig,{
         port: "8089",
         hotOnly: false
     },
+    devtool: 'source-map',
     plugins:[
         // 动态生成html
         new HtmlWebpackPlugin({
