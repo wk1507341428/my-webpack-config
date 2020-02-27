@@ -22,12 +22,19 @@ let webpackProdConfig = webpackMerge(baseWebpackConfig,{
     plugins: [
         // 动态生成html
         new HtmlWebpackPlugin({
-            template:path.resolve(__dirname,'../public/index.html')
+            template:path.resolve(__dirname,'../public/index.html'),
+            filename: 'index.html',
+            chunks: ['home','vendors~home','chunk-common']
+        }),
+        new HtmlWebpackPlugin({
+            template:path.resolve(__dirname,'../public/index2.html'),
+            filename: 'index2.html',
+            chunks: ['other','vendors~other','chunk-common']
         }),
         // 设置前端环境变量
         new webpack.DefinePlugin({
             'process.env': env
-        }),
+        })
     ],
     optimization:{
         // 这里需要注意的是本来mode=production 的时候，是会自己压缩js的，但是启用了这个配置，将不会自己压缩js了

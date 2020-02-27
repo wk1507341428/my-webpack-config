@@ -3,8 +3,7 @@ import './css/index.css'
 import './css/test.css'
 require('./js/test')
 require('./js/addIMG')
-import VConsole from 'VConsole'
-var vConsole = new VConsole();
+
 
 // 我是一个注释
 

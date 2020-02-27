@@ -6,7 +6,10 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 let BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 const webpackBaseConfig = {
-    entry: path.resolve(__dirname,'../src/index.js'),    // 入口文件
+    entry: {
+        home: path.resolve(__dirname,'../src/index.js'),    // 入口文件
+        other: path.resolve(__dirname,'../src/index2.js'),    // 入口文件
+    },
     output: {
         filename: utils.assetsPath("js/[name].[hash:8].js"),
         publicPath: "/", // 打包后的资源的访问路径前缀
@@ -37,7 +40,7 @@ const webpackBaseConfig = {
     plugins: [
         // 拆分css
         new MiniCssExtractPlugin({
-            filename: utils.assetsPath("css/[name].[hash8].css"),
+            filename: utils.assetsPath("css/[name].[hash:8].css"),
             chunkFilename: '[id].[hash].css',
         })
     ],
@@ -45,7 +48,7 @@ const webpackBaseConfig = {
         // CommonsChunkPlugin在webpack4中已经被移除了，现在是使用optimization.splitChunks代替。
         splitChunks: {
             chunks: "all",  // 表示哪些代码需要优化，有三个可选值：initial(初始块)、async(按需加载块)、all(全部块)，默认为async
-            minSize: 30000,     // 表示在压缩前的最小模块大小，默认为30000
+            minSize: 10000,     // 表示在压缩前的最小模块大小，默认为30000
             minChunks: 1,       // minChunks: 表示被引用次数，默认为1
             maxAsyncRequests: 5,    // 按需加载时候最大的并行请求数，默认为5
             maxInitialRequests: 5,      // 一个入口最大的并行请求数，默认为3
@@ -57,15 +60,10 @@ const webpackBaseConfig = {
                     test: /[\\/]node_modules[\\/]/,     // 用于控制哪些模块被这个缓存组匹配到
                     priority: -10       // 缓存组打包的先后优先级
                 },
-                default: {
-                    minChunks: 2, // 引用超过两次的模块 -> default
-                    priority: -20,
-                    reuseExistingChunk: true
-                },
                 common: {
                     name: 'chunk-common',
                     minChunks: 2,
-                    priority: -20,
+                    priority: -5,
                     chunks: 'initial',
                     reuseExistingChunk: true
                 }
